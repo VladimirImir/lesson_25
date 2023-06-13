@@ -19,7 +19,7 @@ public class CounterDemo {
      * ----- 8 -> + 1 -> count -> 9
      *
      * ----- 8 -> + 1 -> count -> 9
-     *  
+     *
      */
 
     public static void main(String[] args) {
