@@ -2,23 +2,27 @@ package com.dev.lesson25.queue;
 
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Semaphore;
 
 public class BuyerThread implements Runnable {
 
-    private final BlockingQueue<CashBox> cashBoxes;
+    //private final BlockingQueue<CashBox> cashBoxes;
+    private final Semaphore cashBoxes;
 
-    public BuyerThread(BlockingQueue<CashBox> cashBoxes) {
+    public BuyerThread(Semaphore cashBoxes) {
         this.cashBoxes = cashBoxes;
     }
 
     @Override
     public void run() {
         try {
-            CashBox cashBox = cashBoxes.take();
-            System.out.println(Thread.currentThread().getName() + " обслуживается в кассе " + cashBox);
+            cashBoxes.acquire();
+
+            System.out.println(Thread.currentThread().getName() + " обслуживается в какой-то кассе");
             Thread.sleep(5L);
-            System.out.println(Thread.currentThread().getName() + " освобождаю кассу " + cashBox);
-            cashBoxes.add(cashBox);
+            System.out.println(Thread.currentThread().getName() + " освобождаю какую-то кассу");
+
+            cashBoxes.release();
             /*synchronized (cashBoxes) {
                 while (true) {
                     if (!cashBoxes.isEmpty()) {
